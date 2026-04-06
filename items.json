@@ -1,0 +1,442 @@
+[
+  {
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier1.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 500,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "Handful of Fire Crystals (500).",
+      "ru": "Горсть Огненных кристаллов (500 шт)."
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier1.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Handful of Crystals",
+      "ru": "Горсть кристаллов"
+    },
+    "order": 1,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 4.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_500",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier2.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 1200,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "A pouch of Fire Crystals (1200). Includes 200 bonus crystals!",
+      "ru": "Кошель Огненных кристаллов (1200 шт). Включает 200 бонусных!"
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier2.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Pouch of Crystals",
+      "ru": "Кошель кристаллов"
+    },
+    "order": 2,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 9.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_1200",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier3.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 2500,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "A stack of Fire Crystals (2500). Perfect for the Battle Pass!",
+      "ru": "Стопка Огненных кристаллов (2500 шт). Хватит на Боевой Пропуск!"
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier3.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Stack of Crystals",
+      "ru": "Стопка кристаллов"
+    },
+    "order": 3,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 19.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_2500",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier4.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 4000,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "A sack of Fire Crystals (4000). Includes 1000 bonus crystals!",
+      "ru": "Мешок Огненных кристаллов (4000 шт). Включает 1000 бонусных!"
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier4.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Sack of Crystals",
+      "ru": "Мешок кристаллов"
+    },
+    "order": 4,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 29.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_4000",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier5.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 7000,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "A heavy chest filled with Fire Crystals (7000).",
+      "ru": "Тяжелый сундук Огненных кристаллов (7000 шт)."
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier5.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Chest of Crystals",
+      "ru": "Сундук кристаллов"
+    },
+    "order": 5,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 49.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_7000",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier6.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 15000,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "The ultimate vault of Fire Crystals (15000). Best value!",
+      "ru": "Огромное хранилище Огненных кристаллов (15000 шт). Максимальная выгода!"
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier6.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Vault of Crystals",
+      "ru": "Хранилище кристаллов"
+    },
+    "order": 6,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 99.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_15000",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_item_package",
+    "content": [
+      {
+        "description": {
+          "en": "Epic visual skin for your character.",
+          "ru": "Эпический облик для вашего персонажа."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/skin_forgemaster.png",
+        "name": {
+          "en": "Lava Forgemaster Outfit",
+          "ru": "Костюм Мастера Лавы"
+        },
+        "quantity": 1,
+        "sku": "item_skin_forgemaster",
+        "type": "virtual_item"
+      }
+    ],
+    "description": {
+      "en": "Dress your hero in the armor of ancient Vulcan. Visual only, no gameplay bonuses.",
+      "ru": "Оденьте героя в броню древнего Вулкана. Только визуал, без влияния на характеристики."
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/skin_forgemaster_preview.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": 1,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Skin: Lava Forgemaster",
+      "ru": "Облик: Властелин Лавы"
+    },
+    "order": 7,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 14.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_skin_forgemaster",
+    "type": "bundle",
+    "vc_prices": []
+  },
+  {
+    "attributes": [],
+    "bundle_type": "virtual_item_package",
+    "content": [
+      {
+        "description": {
+          "en": "Legendary weapon skin.",
+          "ru": "Легендарный облик для оружия."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/weapon_dragonbone.png",
+        "name": {
+          "en": "Dragonbone Greatsword",
+          "ru": "Двуручный меч из кости Дракона"
+        },
+        "quantity": 1,
+        "sku": "item_weapon_dragonbone",
+        "type": "virtual_item"
+      }
+    ],
+    "description": {
+      "en": "Changes the appearance of any two-handed sword to a massive blade carved from the jaw of a red dragon. Leaves a fiery trail when swung.",
+      "ru": "Меняет вид любого двуручного меча на массивный клинок из челюсти красного дракона. Оставляет огненный след при ударе."
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/weapon_dragonbone_preview.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": 1,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Weapon Skin: Dragonbone",
+      "ru": "Скин оружия: Кость Дракона"
+    },
+    "order": 8,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 9.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_weapon_dragonbone",
+    "type": "bundle",
+    "vc_prices": []
+  }
+]

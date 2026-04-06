@@ -1,0 +1,55 @@
+{
+    "attributes": [],
+    "bundle_type": "virtual_currency_package",
+    "content": [
+      {
+        "description": {
+          "en": "Main premium currency.",
+          "ru": "Основная премиум-валюта."
+        },
+        "image_url": "https://api.yoursite.com/assets/images/crystals_tier1.png",
+        "name": {
+          "en": "Fire Crystals",
+          "ru": "Огненные кристаллы"
+        },
+        "quantity": 500,
+        "sku": "currency_fire_crystal",
+        "type": "virtual_currency"
+      }
+    ],
+    "description": {
+      "en": "Handful of Fire Crystals (500).",
+      "ru": "Горсть Огненных кристаллов (500 шт)."
+    },
+    "groups": [],
+    "image_url": "https://api.yoursite.com/assets/images/pack_crystals_tier1.png",
+    "is_enabled": true,
+    "is_free": false,
+    "is_show_in_store": true,
+    "limits": {
+      "per_item": null,
+      "per_user": null,
+      "recurrent_schedule": null
+    },
+    "long_description": null,
+    "media_list": [],
+    "name": {
+      "en": "Handful of Crystals",
+      "ru": "Горсть кристаллов"
+    },
+    "order": 1,
+    "periods": [],
+    "prices": [
+      {
+        "amount": 4.99,
+        "country_iso": "US",
+        "currency": "USD",
+        "is_default": true,
+        "is_enabled": true
+      }
+    ],
+    "regions": [],
+    "sku": "bundle_crystals_500",
+    "type": "bundle",
+    "vc_prices": []
+}
