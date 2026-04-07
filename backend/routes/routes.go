@@ -40,17 +40,7 @@ func SetupRoutes() *gin.Engine {
 		// Крафтинг
 		protected.POST("/crafting/upgrade", controllers.UpgradeMaterials)
 		protected.GET("/crafting/recipes", controllers.GetCraftingRecipes)
-		protected.POST("/crafting/item", controllers.CraftItem)
 
-		// Премиум маршруты (требуют подписку)
-		premium := protected.Group("/premium")
-		premium.Use(middleware.RequireSubscription())
-		{
-			// Здесь будут премиум функции
-			premium.GET("/exclusive-items", func(c *gin.Context) {
-				c.JSON(200, gin.H{"message": "Эксклюзивные предметы для подписчиков"})
-			})
-		}
 	}
 
 	// Health check

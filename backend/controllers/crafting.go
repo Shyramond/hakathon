@@ -113,24 +113,8 @@ func UpgradeMaterials(c *gin.Context) {
 	})
 }
 
-// GetCraftingRecipes получение доступных рецептов
+// GetCraftingRecipes получение доступных рецептов улучшения
 func GetCraftingRecipes(c *gin.Context) {
-	userID := c.GetString("userID")
-	objID, err := primitive.ObjectIDFromHex(userID)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный ID пользователя"})
-		return
-	}
-
-	// Получаем информацию о подписке пользователя
-	usersCollection := config.GetCollection("users")
-	var user models.User
-	err = usersCollection.FindOne(c.Request.Context(), bson.M{"_id": objID}).Decode(&user)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка получения пользователя"})
-		return
-	}
-
 	// Получаем рецепты
 	recipesCollection := config.GetCollection("crafting_recipes")
 	cursor, err := recipesCollection.Find(c.Request.Context(), bson.M{"is_active": true})
@@ -152,142 +136,12 @@ func GetCraftingRecipes(c *gin.Context) {
 		recipes = append(recipes, *baseRecipe)
 	}
 
-	// Фильтруем рецепты в зависимости от подписки
-	var availableRecipes []models.CraftingRecipe
-	for _, recipe := range recipes {
-		filteredRecipe := recipe
-		var availableItemRecipes []models.ItemRecipe
-
-		for _, itemRecipe := range recipe.ItemRecipes {
-			if !itemRecipe.RequiresSubscription || user.Subscription.HasSubscription {
-				availableItemRecipes = append(availableItemRecipes, itemRecipe)
-			}
-		}
-
-		filteredRecipe.ItemRecipes = availableItemRecipes
-		availableRecipes = append(availableRecipes, filteredRecipe)
-	}
-
 	c.JSON(http.StatusOK, gin.H{
-		"recipes": availableRecipes,
+		"recipes": recipes,
 	})
 }
 
-// CraftItem крафт предмета
-func CraftItem(c *gin.Context) {
-	userID := c.GetString("userID")
-	objID, err := primitive.ObjectIDFromHex(userID)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный ID пользователя"})
-		return
-	}
-
-	var req struct {
-		Sku string `json:"sku" binding:"required"`
-	}
-
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Получаем информацию о пользователе
-	usersCollection := config.GetCollection("users")
-	var user models.User
-	err = usersCollection.FindOne(c.Request.Context(), bson.M{"_id": objID}).Decode(&user)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка получения пользователя"})
-		return
-	}
-
-	// Получаем инвентарь
-	inventoriesCollection := config.GetCollection("inventories")
-	var inventory models.Inventory
-	err = inventoriesCollection.FindOne(c.Request.Context(), bson.M{"user_id": objID}).Decode(&inventory)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка получения инвентаря"})
-		return
-	}
-
-	// Получаем рецепты
-	recipesCollection := config.GetCollection("crafting_recipes")
-	cursor, err := recipesCollection.Find(c.Request.Context(), bson.M{"is_active": true})
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка получения рецептов"})
-		return
-	}
-	defer cursor.Close(c.Request.Context())
-
-	var recipes []models.CraftingRecipe
-	if err = cursor.All(c.Request.Context(), &recipes); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка чтения рецептов"})
-		return
-	}
-
-	// Ищем нужный рецепт
-	var foundRecipe *models.CraftingRecipe
-	var foundItemRecipe *models.ItemRecipe
-
-	for _, recipe := range recipes {
-		for _, itemRecipe := range recipe.ItemRecipes {
-			if itemRecipe.Sku == req.Sku {
-				foundRecipe = &recipe
-				foundItemRecipe = &itemRecipe
-				break
-			}
-		}
-		if foundRecipe != nil {
-			break
-		}
-	}
-
-	if foundRecipe == nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Рецепт не найден"})
-		return
-	}
-
-	// Проверяем возможность крафта
-	craftedCount := 0 // В реальном проекте нужно считать из базы
-	canCraft := foundRecipe.CanCraftItem(*foundItemRecipe, &inventory, user.Subscription.HasSubscription, craftedCount)
-
-	if !canCraft {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Недостаточно ресурсов или превышен лимит"})
-		return
-	}
-
-	// Выполняем крафт
-	success, message := foundRecipe.CraftItem(*foundItemRecipe, &inventory, user.Subscription.HasSubscription, craftedCount)
-
-	if !success {
-		c.JSON(http.StatusBadRequest, gin.H{"error": message})
-		return
-	}
-
-	// Обновляем инвентарь в базе
-	update := bson.M{
-		"materials":   inventory.Materials,
-		"currency":    inventory.Currency,
-		"owned_items": inventory.OwnedItems,
-		"updated_at":  inventory.UpdatedAt,
-	}
-
-	_, err = inventoriesCollection.UpdateOne(c.Request.Context(),
-		bson.M{"user_id": objID},
-		bson.M{"$set": update},
-	)
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка сохранения инвентаря"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message":   message,
-		"inventory": inventory,
-	})
-}
-
-// Вспомогательные функции
+// Helper functions
 func isValidRarityCraft(rarity models.Rarity) bool {
 	switch rarity {
 	case models.Grey, models.Green, models.Blue, models.Purple, models.Gold:

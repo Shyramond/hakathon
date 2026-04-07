@@ -59,35 +59,6 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-// RequireSubscription проверяет наличие подписки
-func RequireSubscription() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// Здесь должна быть проверка подписки пользователя
-		// Для примера считаем, что подписка проверяется в базе данных
-
-		userID := c.GetString("userID")
-		if userID == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не авторизован"})
-			c.Abort()
-			return
-		}
-
-		// В реальном проекте здесь будет запрос к базе данных
-		// hasSubscription := checkUserSubscription(userID)
-
-		// Для примера считаем, что подписки нет
-		hasSubscription := false
-
-		if !hasSubscription {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Требуется подписка"})
-			c.Abort()
-			return
-		}
-
-		c.Next()
-	}
-}
-
 // CORSMiddleware для CORS
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {

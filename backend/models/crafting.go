@@ -28,16 +28,13 @@ type UpgradeRecipe struct {
 }
 
 type ItemRecipe struct {
-	Sku                  string         `bson:"sku" json:"sku"`
-	Name                 string         `bson:"name" json:"name"`
-	Type                 string         `bson:"type" json:"type"`
-	Rarity               string         `bson:"rarity" json:"rarity"`
-	ImageURL             string         `bson:"image_url" json:"image_url"`
-	Materials            map[Rarity]int `bson:"materials" json:"materials"`
-	CurrencyCost         int            `bson:"currency_cost" json:"currency_cost"`
-	IsLimited            bool           `bson:"is_limited" json:"is_limited"`
-	LimitPerUser         int            `bson:"limit_per_user" json:"limit_per_user"`
-	RequiresSubscription bool           `bson:"requires_subscription" json:"requires_subscription"`
+	Sku          string         `bson:"sku" json:"sku"`
+	Name         string         `bson:"name" json:"name"`
+	Type         string         `bson:"type" json:"type"`
+	Rarity       string         `bson:"rarity" json:"rarity"`
+	ImageURL     string         `bson:"image_url" json:"image_url"`
+	Materials    map[Rarity]int `bson:"materials" json:"materials"`
+	CurrencyCost int            `bson:"currency_cost" json:"currency_cost"`
 }
 
 type CraftAttempt struct {
@@ -194,25 +191,13 @@ func (cr *CraftingRecipe) PerformUpgrade(rarity Rarity, inventory *Inventory, qu
 }
 
 // CanCraftItem проверяет, можно ли скрафтить предмет
-func (cr *CraftingRecipe) CanCraftItem(itemRecipe ItemRecipe, inventory *Inventory, userSubscription bool, craftedCount int) bool {
-	// Проверяем подписку
-	if itemRecipe.RequiresSubscription && !userSubscription {
-		return false
-	}
-
-	// Проверяем лимиты
-	if itemRecipe.IsLimited && craftedCount >= itemRecipe.LimitPerUser {
-		return false
-	}
-
-	// Проверяем материалы
+func (cr *CraftingRecipe) CanCraftItem(itemRecipe ItemRecipe, inventory *Inventory) bool {
 	for rarity, quantity := range itemRecipe.Materials {
 		if inventory.Materials[rarity] < quantity {
 			return false
 		}
 	}
 
-	// Проверяем валюту
 	if inventory.Currency < itemRecipe.CurrencyCost {
 		return false
 	}
@@ -221,22 +206,19 @@ func (cr *CraftingRecipe) CanCraftItem(itemRecipe ItemRecipe, inventory *Invento
 }
 
 // CraftItem крафтит предмет
-func (cr *CraftingRecipe) CraftItem(itemRecipe ItemRecipe, inventory *Inventory, userSubscription bool, craftedCount int) (bool, string) {
-	if !cr.CanCraftItem(itemRecipe, inventory, userSubscription, craftedCount) {
-		return false, "Недостаточно ресурсов или превышен лимит"
+func (cr *CraftingRecipe) CraftItem(itemRecipe ItemRecipe, inventory *Inventory) (bool, string) {
+	if !cr.CanCraftItem(itemRecipe, inventory) {
+		return false, "Недостаточно ресурсов"
 	}
 
-	// Списываем материалы
 	for rarity, quantity := range itemRecipe.Materials {
 		inventory.RemoveMaterials(rarity, quantity)
 	}
 
-	// Списываем валюту
 	if itemRecipe.CurrencyCost > 0 {
 		inventory.DeductCurrency(itemRecipe.CurrencyCost)
 	}
 
-	// Добавляем предмет
 	ownedItem := OwnedItem{
 		Sku:      itemRecipe.Sku,
 		Name:     itemRecipe.Name,

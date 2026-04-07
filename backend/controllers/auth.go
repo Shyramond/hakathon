@@ -133,7 +133,6 @@ func Login(c *gin.Context) {
 			bson.M{"_id": user.ID},
 			bson.M{"$set": bson.M{
 				"last_login":   user.LastLogin,
-				"login_streak": user.LoginStreak,
 				"total_logins": user.TotalLogins,
 				"updated_at":   user.UpdatedAt,
 			}},
