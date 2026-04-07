@@ -19,9 +19,9 @@ export const Navbar = () => {
           
           <div className="hidden md:flex gap-2">
             {[
-              { id: 'store', label: 'Магазин', icon: Store },
-              { id: 'forge', label: 'Наковальня', icon: Hammer },
-              { id: 'season', label: 'Сезон', icon: Calendar },
+              { id: 'store', label: 'Store', icon: Store },
+              { id: 'forge', label: 'Forge', icon: Hammer },
+              { id: 'season', label: 'Rewards', icon: Calendar },
             ].map((tab) => (
               <button
                 key={tab.id}

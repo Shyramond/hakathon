@@ -1,29 +1,28 @@
-import { useState, FormEvent } from 'react';
-import { useAppStore } from './store';
-import { XsollaAPI } from './api/xsolla';
+import { useState, useEffect, FormEvent } from 'react';
+import { useAppStore, initializeStore } from './store';
 import { Navbar } from './components/Navbar';
 import { Store } from './components/Store';
 import { Forge } from './components/Forge';
-import { SeasonPass } from './components/SeasonPass';
+import { DailyRewards } from './components/DailyRewards';
 import { Loader2, Shield } from 'lucide-react';
 
 function App() {
-  const { user, activeTab, login } = useAppStore();
+  const { user, activeTab, login, loading } = useAppStore();
   
   const [username, setUsername] = useState('Hero_99');
   const [password, setPassword] = useState('password123');
-  const [loading, setLoading] = useState(false);
+
+  // Инициализация при загрузке
+  useEffect(() => {
+    initializeStore();
+  }, []);
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     try {
-      const res: any = await XsollaAPI.Login.authenticate(username, password);
-      login(res.user);
+      await login(username, password);
     } catch (err) {
       alert("Ошибка входа. Пожалуйста, проверьте данные.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -100,16 +99,16 @@ function App() {
         <div className="max-w-7xl mx-auto min-h-full">
           {activeTab === 'store' && <Store />}
           {activeTab === 'forge' && <Forge />}
-          {activeTab === 'season' && <SeasonPass />}
+          {activeTab === 'rewards' && <DailyRewards />}
         </div>
       </main>
       
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800 p-2 z-50 flex justify-around">
         {[
-          { id: 'store', label: 'Магазин' },
-          { id: 'forge', label: 'Ковка' },
-          { id: 'season', label: 'Сезон' },
+          { id: 'store', label: 'Store' },
+          { id: 'forge', label: 'Forge' },
+          { id: 'rewards', label: 'Rewards' },
         ].map((tab) => (
           <button
             key={tab.id}

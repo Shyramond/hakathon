@@ -1,10 +1,12 @@
 /**
- * Mock implementation of Xsolla API.
- * In production, you would use actual API endpoints:
- * - Login API: https://login.xsolla.com/api/
- * - Catalog API: https://store.xsolla.com/api/v2/project/{project_id}/
- * - Paystation API: Integrated via SDK or opening URL with token.
+ * Xsolla API integration.
+ * Environment variables:
+ * - VITE_XSOLLA_API_URL: Xsolla Login API endpoint
+ * - VITE_XSOLLA_PROJECT_ID: Your Xsolla project ID
  */
+
+const XSOLLA_API_URL = import.meta.env.VITE_XSOLLA_API_URL || 'https://login.xsolla.com/api';
+const XSOLLA_PROJECT_ID = import.meta.env.VITE_XSOLLA_PROJECT_ID || 'demo_project_id';
 
 export const XsollaAPI = {
   Login: {

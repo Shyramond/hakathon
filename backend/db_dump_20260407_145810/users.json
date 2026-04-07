@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "69d41fd55580de23401aa93e",
+    "avatar": "https://i.pravatar.cc/150?u=testuser",
+    "created_at": "2026-04-06T21:04:21.746Z",
+    "email": "test@example.com",
+    "is_active": true,
+    "last_login": "2026-04-07T09:48:32.452Z",
+    "login_streak": 1,
+    "password": "$2a$10$M6DnbWJhZ.nwytFsS5mUB.hHlrsyieAKsnGyQPhcObIVT6o8YW8d6",
+    "subscription": {
+      "expires_at": "2026-05-07T08:17:02.568Z",
+      "has_subscription": true,
+      "subscription_id": "",
+      "type": "premium"
+    },
+    "total_logins": 11,
+    "updated_at": "2026-04-07T09:48:32.452Z",
+    "username": "testuser"
+  }
+]

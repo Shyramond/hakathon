@@ -17,6 +17,7 @@ export const Forge = () => {
   const inventory = useAppStore(s => s.inventory);
   const addStones = useAppStore(s => s.addStones);
   const removeStones = useAppStore(s => s.removeStones);
+  const upgradeMaterials = useAppStore(s => s.upgradeMaterials);
 
   const [selectedRarity, setSelectedRarity] = useState<Rarity>('grey');
   const [quantity, setQuantity] = useState(1);
@@ -36,47 +37,50 @@ export const Forge = () => {
 
   const chance = quantity * 10;
 
-  const handleCraft = () => {
+  const handleCraft = async () => {
     if (quantity <= 0 || !nextRarity) return;
     
     setStatus('crafting');
     setLastResult(null);
-    removeStones(selectedRarity, quantity);
-
-    setTimeout(() => {
-      const roll = Math.random() * 100;
-      const isSuccess = roll <= chance;
-
-      if (isSuccess) {
-        addStones(nextRarity, 1);
-        setStatus('success');
-        setLastResult({ amount: 1, rarity: nextRarity, isFail: false });
+    
+    try {
+      const result = await upgradeMaterials(selectedRarity, quantity);
+      
+      // Показываем результат
+      if (result.success) {
         confetti({
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 },
-          colors: [RARITY_MAP[nextRarity].color.includes('amber') ? '#fbbf24' : '#a855f7', '#ffffff']
+          colors: [RARITY_MAP[result.result_rarity as Rarity]?.color.includes('amber') ? '#fbbf24' : '#a855f7', '#ffffff']
         });
+        setLastResult({ amount: result.result_quantity, rarity: result.result_rarity as Rarity, isFail: false });
       } else {
-        setStatus('failure');
-        const prevRarity = RARITY_MAP[selectedRarity].prev;
-        if (prevRarity) {
-          // Cashback mechanics: roughly half of what was lost as previous tier
-          const cashback = Math.max(1, Math.floor(quantity / 2));
-          addStones(prevRarity, cashback);
-          setLastResult({ amount: cashback, rarity: prevRarity, isFail: true });
+        // Провал - показываем кэшбэк
+        const cashbackEntries = Object.entries(result.cashback || {});
+        if (cashbackEntries.length > 0) {
+          const [cashbackRarity, cashbackAmount] = cashbackEntries[0];
+          setLastResult({ amount: cashbackAmount as number, rarity: cashbackRarity as Rarity, isFail: true });
         } else {
-          // Grey failed -> maybe give 1 grey back as pity
-          const pity = 1;
-          addStones('grey', pity);
-          setLastResult({ amount: pity, rarity: 'grey', isFail: true });
+          // Для серых камней без возврата
+          setLastResult({ amount: 0, rarity: selectedRarity, isFail: true });
         }
       }
-
+      
+      setStatus(result.success ? 'success' : 'failure');
+      
       setTimeout(() => {
         setStatus('idle');
       }, 3000);
-    }, 1500); // 1.5s crafting animation
+    } catch (error: any) {
+      console.error('Ошибка крафта:', error);
+      setStatus('failure');
+      setLastResult({ amount: 0, rarity: selectedRarity, isFail: true });
+      
+      setTimeout(() => {
+        setStatus('idle');
+      }, 3000);
+    }
   };
 
   return (
