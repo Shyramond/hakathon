@@ -1,30 +1,30 @@
 .PHONY: dev run build test test-cover docker-up docker-down clean
 
 dev:
- @test -f .env || cp .env.example .env
- docker compose up -d postgres
- @sleep 3
- go run ./cmd/server
+	@test -f .env || cp .env.example .env
+	docker compose up -d postgres
+	@sleep 3
+	cd backend && go run ./cmd/server
 
 run:
- go run ./cmd/server
+	go run ./cmd/server
 
 build:
- CGO_ENABLED=0 go build -ldflags="-w -s" -o bin/server ./cmd/server
+	CGO_ENABLED=0 go build -ldflags="-w -s" -o bin/server ./cmd/server
 
 test:
- go test ./internal/... -v -count=1 -race
+	go test ./internal/... -v -count=1 -race
 
 test-cover:
- go test ./internal/... -coverprofile=coverage.out -count=1
- go tool cover -func=coverage.out
+	go test ./internal/... -coverprofile=coverage.out -count=1
+	go tool cover -func=coverage.out
 
 docker-up:
- @test -f .env || cp .env.example .env
- docker compose up -d --build
+	@test -f .env || cp .env.example .env
+	docker compose up -d --build
 
 docker-down:
- docker compose down
+	docker compose down
 
 clean:
- rm -rf bin/ coverage.out
+	rm -rf bin/ coverage.out
