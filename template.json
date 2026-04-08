@@ -1,0 +1,57 @@
+{
+  "attributes": [],
+  "bundle_type": "virtual_currency_package",
+  "content": [
+    {
+      "description": {
+        "en": "Main in-game currency"
+      },
+      "image_url": "https://.../image.png",
+      "name": {
+        "en": "Crystals",
+        "de": "Kristalle"
+      },
+      "quantity": 500,
+      "sku": "com.xsolla.crystal_2",
+      "type": "virtual_currency"
+    }
+  ],
+  "description": {
+    "en": "Crystals x500"
+  },
+  "groups": [],
+  "image_url": "https://.../image.png",
+  "is_enabled": true,
+  "is_free": false,
+  "is_show_in_store": true,
+  "limits": {
+    "per_item": null,
+    "per_user": null,
+    "recurrent_schedule": null
+  },
+  "long_description": null,
+  "media_list": [],
+  "name": {
+    "en": "Medium crystal pack"
+  },
+  "order": 1,
+  "periods": [
+    {
+      "date_from": null,
+      "date_until": "2020-08-11T20:00:00+03:00"
+    }
+  ],
+  "prices": [
+    {
+      "amount": 20,
+      "country_iso": "US",
+      "currency": "USD",
+      "is_default": true,
+      "is_enabled": true
+    }
+  ],
+  "regions": [],
+  "sku": "com.xsolla.crystal_pack_2",
+  "type": "bundle",
+  "vc_prices": []
+}
