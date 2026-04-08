@@ -1,0 +1,113 @@
+version: "3.9"
+
+services:
+  # ============================
+  # PostgreSQL
+  # ============================
+  postgres:
+    image: postgres:16-alpine
+    container_name: hakathon-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-hakathon}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hakathon_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-hakathon}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hakathon} -d ${POSTGRES_DB:-hakathon}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      - hakathon
+
+  # ============================
+  # Backend API
+  # ============================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hakathon-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Server
+      SERVER_PORT: "8080"
+      GIN_MODE: "release"
+
+      # Database
+      DATABASE_URL: "postgres://${POSTGRES_USER:-hakathon}:${POSTGRES_PASSWORD:-hakathon_secret}@postgres:5432/${POSTGRES_DB:-hakathon}?sslmode=disable"
+
+      # Xsolla
+      XSOLLA_PROJECT_ID: "${XSOLLA_PROJECT_ID:-XXXXXX}"
+      XSOLLA_LOGIN_PROJECT_ID: "${XSOLLA_LOGIN_PROJECT_ID:-XXXXXX}"
+      XSOLLA_API_KEY: "${XSOLLA_API_KEY:-XXXXXX}"
+      XSOLLA_OAUTH2_CLIENT_ID: "${XSOLLA_OAUTH2_CLIENT_ID:-XXXXXX}"
+      XSOLLA_OAUTH2_SECRET: "${XSOLLA_OAUTH2_SECRET:-XXXXXX}"
+      XSOLLA_ISSUER: "${XSOLLA_ISSUER:-https://login.xsolla.com}"
+
+      # Rewards
+      REWARD_MIN: "${REWARD_MIN:-10}"
+      REWARD_MAX: "${REWARD_MAX:-50}"
+      REWARD_COOLDOWN: "${REWARD_COOLDOWN:-24h}"
+
+      # Rate Limit
+      RATE_LIMIT_RPS: "${RATE_LIMIT_RPS:-20}"
+      RATE_LIMIT_BURST: "${RATE_LIMIT_BURST:-40}"
+
+      # CORS
+      CORS_ALLOWED_ORIGINS: "${CORS_ALLOWED_ORIGINS:-*}"
+
+      # Idempotency
+      IDEMPOTENCY_TTL: "${IDEMPOTENCY_TTL:-24h}"
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    networks:
+      - hakathon
+
+  # ============================
+  # Backend (Development — hot reload)
+  # ============================
+  backend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: hakathon-backend-dev
+    profiles:
+      - dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: "8080"
+      GIN_MODE: "debug"
+      DATABASE_URL: "postgres://hakathon:hakathon_secret@postgres:5432/hakathon?sslmode=disable"
+      XSOLLA_PROJECT_ID: "XXXXXX"
+      XSOLLA_LOGIN_PROJECT_ID: "XXXXXX"
+      XSOLLA_API_KEY: "XXXXXX"
+      XSOLLA_OAUTH2_CLIENT_ID: "XXXXXX"
+      XSOLLA_OAUTH2_SECRET: "XXXXXX"
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["go", "run", "./cmd/server"]
+    ports:
+      - "8080:8080"
+    networks:
+      - hakathon
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  hakathon:
+    driver: bridge
