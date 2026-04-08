@@ -4,7 +4,7 @@ import (
     "context"
     "fmt"
 
-    "github.com/Shyramond/hakathon/backend/pkg/xsolla"
+    "github.com/Shyramond/hakathon/backend/pkg"
 )
 
 type XsollaClientMock struct {

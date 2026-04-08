@@ -6,7 +6,8 @@ import {
 import type { ApiEnvelope } from "./types";
 
 function getApiBase(): string {
-  const base = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+  const base =
+    import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8080/api/v1";
   return base.replace(/\/$/, "");
 }
 

@@ -7,7 +7,7 @@ import (
     "github.com/Shyramond/hakathon/backend/internal/middleware"
     "github.com/Shyramond/hakathon/backend/internal/repository"
     "github.com/Shyramond/hakathon/backend/internal/service"
-    "github.com/Shyramond/hakathon/backend/pkg/xsolla"
+    "github.com/Shyramond/hakathon/backend/pkg"
 )
 
 type Dependencies struct {

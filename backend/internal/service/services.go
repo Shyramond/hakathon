@@ -3,7 +3,7 @@ package service
 import (
     "github.com/Shyramond/hakathon/backend/internal/config"
     "github.com/Shyramond/hakathon/backend/internal/repository"
-    "github.com/Shyramond/hakathon/backend/pkg/xsolla"
+    "github.com/Shyramond/hakathon/backend/pkg"
 )
 
 type Services struct {

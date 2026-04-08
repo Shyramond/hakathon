@@ -7,7 +7,7 @@ import (
     "strings"
 
     "github.com/gin-gonic/gin"
-    "github.com/Shyramond/hakathon/backend/pkg/xsolla"
+    "github.com/Shyramond/hakathon/backend/pkg"
 )
 
 const (
