@@ -1,0 +1,157 @@
+{
+  "layout": {
+    "brand": "LootForge Shop",
+    "tabStore": "Store",
+    "tabForge": "Forge",
+    "tabExchange": "Exchange",
+    "tabDaily": "Daily",
+    "tabCatalog": "Catalog",
+    "login": "Sign in",
+    "profile": "Profile",
+    "inventory": "Inventory",
+    "transactions": "Transactions",
+    "logout": "Log out",
+    "tokens": "Tokens",
+    "themeLight": "Light theme",
+    "themeDark": "Dark theme",
+    "langRu": "RU",
+    "langEn": "EN"
+  },
+  "auth": {
+    "xsollaNotConfigured": "Xsolla Login is not configured (VITE_XSOLLA_LOGIN_CLIENT_ID)",
+    "loginFailed": "Sign-in failed"
+  },
+  "store": {
+    "items": {
+      "pack_1": { "name": "100 Coins", "type": "currency" },
+      "pack_2": { "name": "500 Coins", "type": "currency" },
+      "pack_3": { "name": "1000 Coins", "type": "currency" },
+      "skin_dragon": { "name": "Dragon Sword", "type": "skin" },
+      "skin_neon": { "name": "Neon Armor", "type": "skin" },
+      "sub_monthly": { "name": "Monthly Pass", "type": "premium" }
+    },
+    "title": "Store",
+    "payXsolla": "Pay via Xsolla",
+    "securePayment": "Secure payment via Xsolla",
+    "creditCard": "Credit card",
+    "paypal": "PayPal",
+    "terms": "By continuing, you agree to the Terms of Service.",
+    "discountApplied": "Discount applied",
+    "close": "Close"
+  },
+  "forge": {
+    "title": "The Forge",
+    "selectMaterial": "Select material",
+    "quantity": "Quantity to fuse",
+    "successChance": "Success chance",
+    "hint": "Use 10 gems for a guaranteed upgrade. Failing a craft shatters gems, but you recover lower-tier fragments.",
+    "fusing": "Fusing…",
+    "forgeGems": "Forge gems",
+    "success": "SUCCESS!",
+    "shattered": "SHATTERED!",
+    "craftFailed": "Craft failed!",
+    "salvaged": "Salvaged {{amount}} {{tier}} fragments."
+  },
+  "exchange": {
+    "title": "Exchange",
+    "opt1": {
+      "title": "10% OFF cheapest",
+      "desc": "10% off the cheapest store item for 24 hours."
+    },
+    "opt2": {
+      "title": "10% OFF random currency",
+      "desc": "10% off a random currency pack for 12 hours."
+    },
+    "opt3": {
+      "title": "20% OFF any item",
+      "desc": "Pick any item for 20% off for 12 hours."
+    },
+    "opt4": {
+      "title": "30% OFF random item",
+      "desc": "A random item gets 30% off for 12 hours."
+    },
+    "validFor": "Valid for {{hours}}h",
+    "cost": "Cost:",
+    "rolling": "Rolling…",
+    "exchange": "Exchange",
+    "selectItem": "Select an item to discount",
+    "cancel": "Cancel",
+    "discountUnlocked": "Discount unlocked!",
+    "appliedTo": "Applied to:"
+  },
+  "daily": {
+    "dayDesc": {
+      "1": "A modest start.",
+      "2": "Gathering more dust.",
+      "3": "First spark of magic!",
+      "4": "A handful of stones.",
+      "5": "Feeling lucky.",
+      "6": "Rare and shiny.",
+      "7": "The weekly grand prize!"
+    },
+    "title": "Daily rewards",
+    "subtitle": "Log in every day to collect gems and build your fortune.",
+    "streak": "Current streak:",
+    "day": "day",
+    "days": "days",
+    "dayN": "Day {{n}}",
+    "claim": "Claim today's reward",
+    "comeBack": "Come back tomorrow",
+    "claimedTitle": "Daily reward claimed!",
+    "addedToInventory": "Added to your inventory"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "benefits": "Benefits",
+    "xsollaItems": "Virtual items (Xsolla)",
+    "filterGroups": "Groups",
+    "allGroups": "All",
+    "loading": "Loading…",
+    "error": "Failed to load",
+    "retry": "Retry",
+    "noBenefits": "No benefits available",
+    "noItems": "No items",
+    "tokens": "tok.",
+    "buy": "Buy",
+    "back": "Back",
+    "detail": "Details",
+    "purchaseSuccess": "Purchase completed",
+    "needLogin": "Sign in to purchase",
+    "catalogNotConfigured": "Set VITE_XSOLLA_PROJECT_ID for Xsolla catalog",
+    "inactive": "Inactive"
+  },
+  "profile": {
+    "title": "Profile",
+    "back": "Back to store",
+    "balance": "Token balance",
+    "email": "Email",
+    "username": "Username",
+    "inventoryPreview": "Items in inventory",
+    "loading": "Loading profile…",
+    "needLogin": "Sign in to open profile"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "back": "Back",
+    "empty": "Inventory is empty",
+    "equip": "Equip",
+    "equipped": "Equipped",
+    "needLogin": "Sign in to open inventory",
+    "loading": "Loading…"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "back": "Back",
+    "empty": "No transactions",
+    "needLogin": "Sign in to see history",
+    "loading": "Loading…",
+    "amount": "Amount",
+    "type": "Type",
+    "date": "Date",
+    "description": "Description"
+  },
+  "common": {
+    "type": "Type",
+    "price": "Price"
+  }
+}

@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Calendar, CheckCircle2, Lock, Gift } from 'lucide-react';
 import { useStore, GemTier } from '../store/useStore';
 import { cn } from '../lib/utils';
 import { isSameDay } from 'date-fns';
 
-const DAILY_REWARDS: { day: number; tier: GemTier; amount: number; desc: string }[] = [
-  { day: 1, tier: 'grey', amount: 3, desc: 'A modest start.' },
-  { day: 2, tier: 'grey', amount: 5, desc: 'Gathering more dust.' },
-  { day: 3, tier: 'green', amount: 1, desc: 'First spark of magic!' },
-  { day: 4, tier: 'grey', amount: 10, desc: 'A handful of stones.' },
-  { day: 5, tier: 'green', amount: 3, desc: 'Feeling lucky.' },
-  { day: 6, tier: 'blue', amount: 1, desc: 'Rare and shiny.' },
-  { day: 7, tier: 'purple', amount: 1, desc: 'The weekly grand prize!' },
+const DAILY_REWARDS: { day: number; tier: GemTier; amount: number }[] = [
+  { day: 1, tier: 'grey', amount: 3 },
+  { day: 2, tier: 'grey', amount: 5 },
+  { day: 3, tier: 'green', amount: 1 },
+  { day: 4, tier: 'grey', amount: 10 },
+  { day: 5, tier: 'green', amount: 3 },
+  { day: 6, tier: 'blue', amount: 1 },
+  { day: 7, tier: 'purple', amount: 1 },
 ];
 
 const gemColors: Record<GemTier, string> = {
@@ -24,6 +25,7 @@ const gemColors: Record<GemTier, string> = {
 };
 
 export function DailyLogin() {
+  const { t } = useTranslation();
   const { loginStreak, lastLoginDate, claimDailyLogin } = useStore();
   const [canClaim, setCanClaim] = useState(false);
   const [claimedReward, setClaimedReward] = useState<{ tier: GemTier; amount: number } | null>(null);
@@ -61,15 +63,15 @@ export function DailyLogin() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-pink-400 to-rose-500 text-transparent bg-clip-text flex items-center gap-3">
             <Calendar className="w-8 h-8 text-pink-500" />
-            Daily Rewards
+            {t('daily.title')}
           </h1>
-          <p className="text-slate-400 mt-2">Log in every day to collect free gems and build your fortune.</p>
+          <p className="text-slate-400 mt-2">{t('daily.subtitle')}</p>
         </div>
         
         <div className="bg-slate-900 border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-4">
-          <span className="text-sm text-slate-400 font-medium">Current Streak:</span>
+          <span className="text-sm text-slate-400 font-medium">{t('daily.streak')}</span>
           <span className="text-2xl font-bold text-white flex items-center gap-2">
-            🔥 {loginStreak} {loginStreak === 1 ? 'day' : 'days'}
+            🔥 {loginStreak} {loginStreak === 1 ? t('daily.day') : t('daily.days')}
           </span>
         </div>
       </div>
@@ -107,7 +109,7 @@ export function DailyLogin() {
               )}
 
               <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 block w-full border-b border-white/5 pb-2">
-                Day {reward.day}
+                {t('daily.dayN', { n: reward.day })}
               </span>
               
               <div className="flex-1 flex flex-col items-center justify-center">
@@ -131,7 +133,7 @@ export function DailyLogin() {
                   {reward.tier}
                 </span>
                 <span className="text-[10px] text-slate-400 mt-1 line-clamp-2 min-h-[30px]">
-                  {reward.desc}
+                  {t(`daily.dayDesc.${reward.day}` as const)}
                 </span>
               </div>
             </motion.div>
@@ -148,13 +150,13 @@ export function DailyLogin() {
           {canClaim ? (
             <>
               <Gift className="w-6 h-6 animate-bounce" />
-              Claim Today's Reward
+              {t('daily.claim')}
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
             </>
           ) : (
             <>
               <Lock className="w-6 h-6" />
-              Come Back Tomorrow
+              {t('daily.comeBack')}
             </>
           )}
         </button>
@@ -172,12 +174,12 @@ export function DailyLogin() {
             animate={{ scale: 1, y: 0 }}
             className="bg-slate-900 border border-pink-500/30 p-8 rounded-3xl flex flex-col items-center shadow-[0_0_100px_rgba(236,72,153,0.3)]"
           >
-            <h2 className="text-3xl font-bold text-white mb-6">Daily Reward Claimed!</h2>
+            <h2 className="text-3xl font-bold text-white mb-6">{t('daily.claimedTitle')}</h2>
             <div className="flex items-center gap-6">
               <div className={cn("w-20 h-20 rotate-45 rounded-xl shadow-2xl", gemColors[claimedReward.tier])} />
               <span className="text-5xl font-black text-white">x{claimedReward.amount}</span>
             </div>
-            <p className="mt-8 text-slate-300 font-medium text-lg">Added to your inventory</p>
+            <p className="mt-8 text-slate-300 font-medium text-lg">{t('daily.addedToInventory')}</p>
           </motion.div>
         </motion.div>
       )}

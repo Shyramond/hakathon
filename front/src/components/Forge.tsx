@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Hammer, Info, ChevronRight } from 'lucide-react';
 import { useStore, GemTier, GEM_TIERS } from '../store/useStore';
@@ -13,6 +14,7 @@ const gemColors: Record<GemTier, string> = {
 };
 
 export function Forge() {
+  const { t } = useTranslation();
   const gems = useStore(state => state.gems);
   const craftGems = useStore(state => state.craftGems);
 
@@ -43,7 +45,7 @@ export function Forge() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-orange-400 to-red-500 text-transparent bg-clip-text flex items-center gap-3">
           <Hammer className="w-8 h-8 text-orange-500" />
-          The Forge
+          {t('forge.title')}
         </h1>
       </div>
 
@@ -56,7 +58,7 @@ export function Forge() {
           {/* Left side: Selection */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-medium text-slate-300 mb-4">Select Material</h3>
+              <h3 className="text-lg font-medium text-slate-300 mb-4">{t('forge.selectMaterial')}</h3>
               <div className="flex gap-3 flex-wrap">
                 {GEM_TIERS.slice(0, 4).map(tier => (
                   <button
@@ -85,11 +87,11 @@ export function Forge() {
               <div className="bg-black/30 rounded-2xl p-6 border border-white/5">
                 <div className="flex justify-between items-end mb-6">
                   <div>
-                    <h4 className="text-sm font-medium text-slate-400 mb-1">Quantity to fuse</h4>
+                    <h4 className="text-sm font-medium text-slate-400 mb-1">{t('forge.quantity')}</h4>
                     <div className="text-3xl font-bold text-white">{amount} <span className="text-lg text-slate-500">/ {Math.max(10, gems[selectedTier])}</span></div>
                   </div>
                   <div className="text-right">
-                    <h4 className="text-sm font-medium text-slate-400 mb-1">Success Chance</h4>
+                    <h4 className="text-sm font-medium text-slate-400 mb-1">{t('forge.successChance')}</h4>
                     <div className={cn(
                       "text-3xl font-bold transition-colors",
                       amount * 10 >= 50 ? "text-green-400" : "text-orange-400",
@@ -112,7 +114,7 @@ export function Forge() {
                 <div className="mt-6 flex items-start gap-3 bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
                   <Info className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                   <p className="text-sm text-blue-200/80 leading-relaxed">
-                    Use 10 gems for a guaranteed upgrade. Failing a craft will shatter the gems, but you'll recover some lower-tier fragments as cashback.
+                    {t('forge.hint')}
                   </p>
                 </div>
               </div>
@@ -159,7 +161,7 @@ export function Forge() {
                       )}
                     >
                       <div className="absolute -top-12 -right-12 text-green-400 font-bold text-xl animate-bounce">
-                        SUCCESS!
+                        {t('forge.success')}
                       </div>
                     </motion.div>
                   ) : (
@@ -174,7 +176,7 @@ export function Forge() {
                       )}
                     >
                       <div className="absolute -top-12 -left-8 text-red-500 font-bold text-xl w-32 -rotate-45">
-                        SHATTERED!
+                        {t('forge.shattered')}
                       </div>
                     </motion.div>
                   )
@@ -203,9 +205,9 @@ export function Forge() {
                     transition={{ delay: 0.5 }}
                     className="absolute -bottom-8 w-[120%] text-center bg-slate-800/90 backdrop-blur-md py-3 px-4 rounded-xl border border-red-500/30 text-sm shadow-xl z-30"
                   >
-                    <span className="text-red-400 font-semibold block mb-1">Craft Failed!</span>
+                    <span className="text-red-400 font-semibold block mb-1">{t('forge.craftFailed')}</span>
                     <span className="text-slate-300">
-                      Salvaged {craftResult.cashbackAmount} <span className={cn("font-bold uppercase", `text-${craftResult.cashbackTier}-400`)}>{craftResult.cashbackTier}</span> fragments.
+                      {t('forge.salvaged', { amount: craftResult.cashbackAmount, tier: craftResult.cashbackTier })}
                     </span>
                   </motion.div>
                 )}
@@ -217,7 +219,7 @@ export function Forge() {
               disabled={gems[selectedTier] < amount || isCrafting || !nextTier}
               className="w-full max-w-[280px] bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg shadow-orange-500/25 transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none disabled:grayscale"
             >
-              {isCrafting ? 'Fusing...' : 'Forge Gems'}
+              {isCrafting ? t('forge.fusing') : t('forge.forgeGems')}
             </button>
           </div>
 

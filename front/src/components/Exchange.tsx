@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, Tag, Clock, Sparkles } from 'lucide-react';
 import { useStore, SHOP_ITEMS, GemTier, Discount } from '../store/useStore';
@@ -15,50 +16,54 @@ interface ExchangeOption {
   desc: string;
 }
 
-const EXCHANGE_OPTIONS: ExchangeOption[] = [
-  {
-    id: 'exc_1',
-    tier: 'blue',
-    cost: 3,
-    discountValue: 0.1,
-    durationHours: 24,
-    type: 'cheapest',
-    title: '10% OFF Cheapest',
-    desc: 'Get a 10% discount on the cheapest item in the store for 24 hours.',
-  },
-  {
-    id: 'exc_2',
-    tier: 'blue',
-    cost: 7,
-    discountValue: 0.1,
-    durationHours: 12,
-    type: 'random_currency',
-    title: '10% OFF Random Currency',
-    desc: 'Receive a 10% discount on a random currency pack for 12 hours.',
-  },
-  {
-    id: 'exc_3',
-    tier: 'purple',
-    cost: 5,
-    discountValue: 0.2,
-    durationHours: 12,
-    type: 'any',
-    title: '20% OFF Any Item',
-    desc: 'Choose any item to receive a 20% discount for 12 hours.',
-  },
-  {
-    id: 'exc_4',
-    tier: 'gold',
-    cost: 1,
-    discountValue: 0.3,
-    durationHours: 12,
-    type: 'random',
-    title: '30% OFF Random Item',
-    desc: 'Unbox a massive 30% discount on a completely random item for 12 hours.',
-  },
-];
-
 export function Exchange() {
+  const { t } = useTranslation();
+  const EXCHANGE_OPTIONS: ExchangeOption[] = useMemo(
+    () => [
+      {
+        id: 'exc_1',
+        tier: 'blue',
+        cost: 3,
+        discountValue: 0.1,
+        durationHours: 24,
+        type: 'cheapest',
+        title: t('exchange.opt1.title'),
+        desc: t('exchange.opt1.desc'),
+      },
+      {
+        id: 'exc_2',
+        tier: 'blue',
+        cost: 7,
+        discountValue: 0.1,
+        durationHours: 12,
+        type: 'random_currency',
+        title: t('exchange.opt2.title'),
+        desc: t('exchange.opt2.desc'),
+      },
+      {
+        id: 'exc_3',
+        tier: 'purple',
+        cost: 5,
+        discountValue: 0.2,
+        durationHours: 12,
+        type: 'any',
+        title: t('exchange.opt3.title'),
+        desc: t('exchange.opt3.desc'),
+      },
+      {
+        id: 'exc_4',
+        tier: 'gold',
+        cost: 1,
+        discountValue: 0.3,
+        durationHours: 12,
+        type: 'random',
+        title: t('exchange.opt4.title'),
+        desc: t('exchange.opt4.desc'),
+      },
+    ],
+    [t]
+  );
+
   const { gems, removeGems, addDiscount } = useStore();
   const [activeExchange, setActiveExchange] = useState<ExchangeOption | null>(null);
   const [showItemSelect, setShowItemSelect] = useState(false);
@@ -113,7 +118,7 @@ export function Exchange() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-teal-400 to-emerald-500 text-transparent bg-clip-text flex items-center gap-3">
           <RefreshCw className="w-8 h-8 text-teal-500" />
-          Exchange
+          {t('exchange.title')}
         </h1>
       </div>
 
@@ -136,7 +141,7 @@ export function Exchange() {
                     {opt.title}
                   </h3>
                   <div className="flex items-center text-sm text-slate-400 gap-1 font-medium">
-                    <Clock className="w-4 h-4" /> Valid for {opt.durationHours}h
+                    <Clock className="w-4 h-4" /> {t('exchange.validFor', { hours: opt.durationHours })}
                   </div>
                 </div>
               </div>
@@ -147,7 +152,7 @@ export function Exchange() {
 
               <div className="flex items-center justify-between mt-auto">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-slate-400">Cost:</span>
+                  <span className="text-sm font-medium text-slate-400">{t('exchange.cost')}</span>
                   <div className="flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-white/5">
                     <div className={cn("w-3 h-3 rotate-45 rounded-sm shadow-[0_0_8px_rgba(255,255,255,0.2)]", 
                       opt.tier === 'blue' ? 'bg-blue-400' : 
@@ -163,7 +168,7 @@ export function Exchange() {
                   className="bg-teal-600 hover:bg-teal-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all active:scale-95 disabled:opacity-50 disabled:grayscale flex items-center gap-2"
                 >
                   <RefreshCw className={cn("w-4 h-4", activeExchange?.id === opt.id && isRolling && "animate-spin")} />
-                  {activeExchange?.id === opt.id && isRolling ? 'Rolling...' : 'Exchange'}
+                  {activeExchange?.id === opt.id && isRolling ? t('exchange.rolling') : t('exchange.exchange')}
                 </button>
               </div>
             </motion.div>
@@ -186,7 +191,7 @@ export function Exchange() {
               exit={{ scale: 0.9, y: 20 }}
               className="bg-slate-900 border border-white/10 p-6 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Select an item to discount</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('exchange.selectItem')}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {SHOP_ITEMS.map(item => (
                   <button
@@ -199,7 +204,9 @@ export function Exchange() {
                     className="flex flex-col items-center bg-slate-800 p-4 rounded-xl border border-white/5 hover:border-teal-500 hover:bg-slate-700 transition-all text-center"
                   >
                     <div className="text-4xl mb-2">{item.image}</div>
-                    <span className="text-sm font-bold text-white">{item.name}</span>
+                    <span className="text-sm font-bold text-white">
+                      {t(`store.items.${item.id}.name`, { defaultValue: item.name })}
+                    </span>
                     <span className="text-xs text-slate-400">${item.price.toFixed(2)}</span>
                   </button>
                 ))}
@@ -211,7 +218,7 @@ export function Exchange() {
                 }}
                 className="mt-6 w-full py-3 bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-700 transition-colors"
               >
-                Cancel
+                {t('exchange.cancel')}
               </button>
             </motion.div>
           </motion.div>
@@ -228,15 +235,19 @@ export function Exchange() {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md"
           >
             <Sparkles className="w-16 h-16 text-yellow-400 mb-6 animate-pulse" />
-            <h2 className="text-3xl font-bold text-white mb-2">Discount Unlocked!</h2>
-            <p className="text-teal-400 font-medium mb-8">Applied to:</p>
+            <h2 className="text-3xl font-bold text-white mb-2">{t('exchange.discountUnlocked')}</h2>
+            <p className="text-teal-400 font-medium mb-8">{t('exchange.appliedTo')}</p>
             
             <div className="bg-slate-800 p-8 rounded-3xl border border-teal-500/50 flex flex-col items-center shadow-[0_0_50px_rgba(20,184,166,0.2)]">
               <div className="text-6xl mb-4">
                 {SHOP_ITEMS.find(i => i.id === rolledItem)?.image}
               </div>
               <span className="text-xl font-bold text-white">
-                {SHOP_ITEMS.find(i => i.id === rolledItem)?.name}
+                {rolledItem
+                  ? t(`store.items.${rolledItem}.name`, {
+                      defaultValue: SHOP_ITEMS.find((i) => i.id === rolledItem)?.name ?? "",
+                    })
+                  : ""}
               </span>
             </div>
           </motion.div>

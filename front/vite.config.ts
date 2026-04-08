@@ -16,4 +16,18 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: process.env.VITE_DEV_API_PROXY || "http://127.0.0.1:8080",
+        changeOrigin: true,
+      },
+      "/xsolla-catalog": {
+        target: "https://store.xsolla.com",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/xsolla-catalog/, ""),
+        secure: true,
+      },
+    },
+  },
 });
