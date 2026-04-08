@@ -78,7 +78,6 @@ export function Layout({
     { id: "forge", label: t("layout.tabForge"), icon: Hammer },
     { id: "exchange", label: t("layout.tabExchange"), icon: RefreshCw },
     { id: "daily", label: t("layout.tabDaily"), icon: LogIn },
-    { id: "catalog", label: t("layout.tabCatalog"), icon: Package },
   ];
 
   const goXsollaLogin = () => {
@@ -282,7 +281,7 @@ export function Layout({
 
       <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
 
-      {["store", "forge", "exchange", "daily", "catalog"].includes(activeTab) && (
+      {['store', 'forge', 'exchange', 'daily'].includes(activeTab) && (
         <nav
           className={cn(
             "fixed bottom-0 w-full backdrop-blur-md border-t pb-safe z-40",

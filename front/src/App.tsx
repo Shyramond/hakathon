@@ -4,7 +4,6 @@ import { Store } from "./components/Store";
 import { Forge } from "./components/Forge";
 import { Exchange } from "./components/Exchange";
 import { DailyLogin } from "./components/DailyLogin";
-import { Catalog } from "./components/Catalog";
 import { ProfilePage } from "./components/ProfilePage";
 import { InventoryPage } from "./components/InventoryPage";
 import { TransactionsPage } from "./components/TransactionsPage";
@@ -38,8 +37,6 @@ export default function App() {
         return <Exchange />;
       case "daily":
         return <DailyLogin />;
-      case "catalog":
-        return <Catalog />;
       case "profile":
         return <ProfilePage onBack={() => setActiveTab("store")} />;
       case "inventory":

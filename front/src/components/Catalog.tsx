@@ -105,6 +105,23 @@ export function Catalog() {
     }
   };
 
+  const handleXsollaPurchase = (item: CatalogVirtualItem) => {
+    if (!user) {
+      showToast(t("catalog.needLogin"), "info");
+      return;
+    }
+
+    const projectId = import.meta.env.VITE_XSOLLA_PROJECT_ID?.trim();
+    if (!projectId) {
+      showToast(t("catalog.catalogNotConfigured"), "error");
+      return;
+    }
+
+    const catalogBase = import.meta.env.VITE_XSOLLA_CATALOG_BASE_URL?.trim() || "/xsolla-catalog";
+    const url = `${catalogBase}/paystation2/?projectId=${encodeURIComponent(projectId)}&sku=${encodeURIComponent(item.sku)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   const skeletonCard = (
     <div
       className={cn(
@@ -233,14 +250,21 @@ export function Catalog() {
                   <p className={surfaces.textMuted}>{t("catalog.noBenefits")}</p>
                 )
               : benefits.map((b) => (
-                  <motion.button
-                    type="button"
+                  <motion.div
                     key={b.id}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     onClick={() => setDetailId(b.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setDetailId(b.id);
+                      }
+                    }}
+                    tabIndex={0}
+                    role="button"
                     className={cn(
-                      "text-left rounded-2xl border overflow-hidden transition-all hover:border-indigo-500/50",
+                      "cursor-pointer text-left rounded-2xl border overflow-hidden transition-all hover:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50",
                       surfaces.card,
                       surfaces.cardBorder
                     )}
@@ -256,16 +280,37 @@ export function Catalog() {
                         <Package className="w-16 h-16 text-slate-500" />
                       )}
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-bold text-lg">{b.name}</h3>
-                      <p className={cn("text-sm line-clamp-2", surfaces.textMuted)}>
-                        {b.description}
-                      </p>
-                      <p className="text-indigo-400 font-semibold mt-2">
-                        {b.price_tokens} {t("catalog.tokens")}
-                      </p>
+                    <div className="p-4 space-y-3">
+                      <div>
+                        <h3 className="font-bold text-lg">{b.name}</h3>
+                        <p className={cn("text-sm line-clamp-2", surfaces.textMuted)}>
+                          {b.description}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-indigo-400 font-semibold">
+                          {b.price_tokens} {t("catalog.tokens")}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handlePurchase(b.id);
+                          }}
+                          disabled={!b.is_active || purchaseBusy}
+                          className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white py-2 px-4 rounded-xl font-semibold"
+                        >
+                          <ShoppingCart className="w-4 h-4" />
+                          {t("catalog.buy")}
+                        </button>
+                      </div>
+                      {!b.is_active && (
+                        <p className="text-amber-500 text-sm font-medium">
+                          {t("catalog.inactive")}
+                        </p>
+                      )}
                     </div>
-                  </motion.button>
+                  </motion.div>
                 ))}
         </div>
       </section>
@@ -355,12 +400,14 @@ export function Catalog() {
                         <Package className="w-16 h-16 text-slate-500" />
                       )}
                     </div>
-                    <div className="p-4 space-y-2">
-                      <h3 className="font-bold">{item.name}</h3>
-                      <p className={cn("text-sm line-clamp-3", surfaces.textMuted)}>
-                        {item.description}
-                      </p>
-                      <div className="text-sm space-y-1">
+                    <div className="p-4 space-y-4">
+                      <div className="space-y-2">
+                        <h3 className="font-bold">{item.name}</h3>
+                        <p className={cn("text-sm line-clamp-3", surfaces.textMuted)}>
+                          {item.description}
+                        </p>
+                      </div>
+                      <div className="space-y-2 text-sm">
                         {item.price != null && (
                           <p>
                             {t("common.price")}: {item.price}{" "}
@@ -378,6 +425,14 @@ export function Catalog() {
                           </p>
                         )}
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => handleXsollaPurchase(item)}
+                        className="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl font-semibold"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                        {t("catalog.buy")}
+                      </button>
                     </div>
                   </motion.div>
                 ))}
