@@ -9,7 +9,5 @@ tmp/
 coverage.*
 *.test
 *.out
-docker-compose*.yml
-Makefile
 scripts/
 api/
